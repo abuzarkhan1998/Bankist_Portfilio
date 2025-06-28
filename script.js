@@ -11,8 +11,11 @@ const scrollTobtn = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 const linksContainer = document.querySelector('.nav__links');
 const tabButtons = document.querySelectorAll('.operations__tab');
-const tabButtonsContainer = document.querySelector('.operations__tab-container');
+const tabButtonsContainer = document.querySelector(
+  '.operations__tab-container'
+);
 const operationsContent = document.querySelectorAll('.operations__content');
+const nav = document.querySelector('.nav');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -45,7 +48,6 @@ scrollTobtn.addEventListener('click', function () {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-
 //Page navigation using smooth scrolling
 
 linksContainer.addEventListener('click', function (e) {
@@ -58,16 +60,40 @@ linksContainer.addEventListener('click', function (e) {
   }
 });
 
-
 //tabbed component
-tabButtonsContainer.addEventListener('click',function(e){
-// console.log(e.target);
-const clicked = e.target.closest('.operations__tab');
-console.log(clicked);
 
-if(!clicked) return;
-tabButtons.forEach(b => b.classList.remove('operations__tab--active'));
-operationsContent.forEach(c => c.classList.remove('operations__content--active'));
-clicked.classList.add('operations__tab--active');
-document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+tabButtonsContainer.addEventListener('click', function (e) {
+  // console.log(e.target);
+  const clicked = e.target.closest('.operations__tab');
+  // console.log(clicked);
+
+  if (!clicked) return;
+  tabButtons.forEach(b => b.classList.remove('operations__tab--active'));
+  operationsContent.forEach(c =>
+    c.classList.remove('operations__content--active')
+  );
+  clicked.classList.add('operations__tab--active');
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
+
+//Hovering effect to nav links
+
+const handleHover = function(e)
+{
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('nav').querySelectorAll('.nav__link');
+    const logo = link.closest('nav').querySelector('.nav__logo');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity =this;
+  }
+}
+
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1));
