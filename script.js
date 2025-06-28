@@ -7,9 +7,12 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const scrollTobtn = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+const linksContainer = document.querySelector('.nav__links');
 
 const openModal = function (e) {
-   e.preventDefault();
+  e.preventDefault();
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
@@ -19,7 +22,7 @@ const closeModal = function () {
   overlay.classList.add('hidden');
 };
 
-btnsOpenModal.forEach(btn => btn.addEventListener('click',openModal));
+btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
 
 // for (let i = 0; i < btnsOpenModal.length; i++)
 //   btnsOpenModal[i].addEventListener('click', openModal);
@@ -35,11 +38,18 @@ document.addEventListener('keydown', function (e) {
 
 //Scrolling
 
-const scrollTobtn = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
+scrollTobtn.addEventListener('click', function () {
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
 
-scrollTobtn.addEventListener('click', function()
-{
- section1.scrollIntoView({behavior : 'smooth'});
-})
+//Page navigation using smooth scrolling
 
+linksContainer.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (e.target.classList.contains('nav__link')) {
+    console.log(e.target);
+    document
+      .querySelector(e.target.getAttribute('href'))
+      .scrollIntoView({ behavior: 'smooth' });
+  }
+});
