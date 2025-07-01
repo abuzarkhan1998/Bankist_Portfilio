@@ -16,6 +16,7 @@ const tabButtonsContainer = document.querySelector(
 );
 const operationsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
+const header = document.querySelector('.header');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -97,3 +98,22 @@ const handleHover = function(e)
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+
+//Adding sticky navigation using Intersection Oberver API
+
+const navHeight = nav.getBoundingClientRect().height;
+// console.log(navHeight);
+
+const headerObserfunc = function(entries)
+{
+  const [entry] = entries;
+  // console.log(entry);
+
+  if(!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+}
+
+const headerObserver = new IntersectionObserver(headerObserfunc, {root : null, threshold : 0, rootMargin : `-${navHeight}px`});
+
+headerObserver.observe(header);
