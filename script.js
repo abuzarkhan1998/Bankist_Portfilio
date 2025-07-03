@@ -17,6 +17,7 @@ const tabButtonsContainer = document.querySelector(
 const operationsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section')
 
 const openModal = function (e) {
   e.preventDefault();
@@ -117,3 +118,25 @@ const headerObserfunc = function(entries)
 const headerObserver = new IntersectionObserver(headerObserfunc, {root : null, threshold : 0, rootMargin : `-${navHeight}px`});
 
 headerObserver.observe(header);
+
+
+//Revealing element on a scroll
+
+// console.log(allSections);
+
+const sectionObserverFunction = function(entries, oberver)
+{
+  const [entry] = entries;
+  console.log(entry);
+  if(!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  oberver.unobserve(entry.target);
+}
+
+const sectionObserver = new IntersectionObserver(sectionObserverFunction,{root : null, threshold : 0.15});
+
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
